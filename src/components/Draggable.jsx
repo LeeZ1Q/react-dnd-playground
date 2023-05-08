@@ -1,22 +1,32 @@
-import {useDrag} from 'react-dnd';
+import React from 'react';
+import { useDrag } from 'react-dnd';
+import styles from '../styles/Draggable.module.css';
 
-function Draggable({id}){
-  const [{isDragging}, drag] = useDrag(() => ({
-    type: 'card',
-    item: {id},
-    collect: monitor => ({
-      isDragging: !!monitor.isDragging(),
+function Draggable({ children, type, item, text, style, hideWhenDrag, state }) {
+  const [{ isDragging }, drag] = useDrag(
+    () => ({
+      type,
+      item,
+      collect: (monitor) => ({
+        isDragging: !!monitor.isDragging(),
+      }),
     }),
-  }));
+    [state]
+  );
 
-  if (isDragging){
-    return <div ref={drag}></div>
+  if (isDragging && hideWhenDrag) {
+    return <div ref={drag}></div>;
   }
 
   return (
-    <div id = 'drag' ref = {drag}>
-      {`Drag ${id}`}
-    </div>
+    <span
+      className={`${styles.draggable} ${isDragging && styles.dragging}`}
+      style={style}
+      ref={drag}
+    >
+      <span>{text}</span>
+      {children}
+    </span>
   );
 }
 

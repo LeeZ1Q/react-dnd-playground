@@ -1,20 +1,31 @@
-import {useDrop} from 'react-dnd';
+import React from 'react';
+import { useDrop } from 'react-dnd';
+import styles from '../styles/Droppable.module.css';
 
-function Droppable({handleDrop, state, text, children}){
-  const [{isOver}, drop] = useDrop(() => ({
-    accept: 'card',
-    collect: monitor => ({
-      isOver: monitor.isOver(),
+function Droppable({ accept, handleDrop, text, children, state, big, style }) {
+  const [{ isOver, canDrop }, drop] = useDrop(
+    () => ({
+      accept,
+      drop: (item, monitor) => handleDrop(item, monitor, state),
+      collect: (monitor) => ({
+        isOver: !!monitor.isOver({ shallow: true }),
+        canDrop: !!monitor.canDrop(),
+      }),
     }),
-    drop: (item) => {
-      handleDrop(item);
-    },
-  }), [state]);
+    [state] // Dependency
+  );
+
+  const isActive = isOver && canDrop;
 
   return (
-    <div id = 'drop' ref={drop}>
-      {text}
-      <br />
+    <div
+      className={`${styles.droppable} ${isActive && styles.over} ${
+        !isActive && canDrop && styles.can
+      } ${big && styles.big}`}
+      style={style}
+      ref={drop}
+    >
+      <div>{text}</div>
       {children}
     </div>
   );

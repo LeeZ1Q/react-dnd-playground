@@ -1,8 +1,7 @@
 import React from 'react';
 import Knight from './Knight';
 import BoardSquare from './BoardSquare'
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+
 
 function renderSquare(i, knightPosition) {
   const x = i % 8
@@ -30,7 +29,6 @@ function ChessBoard({ knightPosition }) {
   }
 
   return (
-    <DndProvider backend={HTML5Backend}>
       <div
         style={{
           width: '100%',
@@ -41,8 +39,6 @@ function ChessBoard({ knightPosition }) {
       >
         {squares}
       </div>
-    </DndProvider>
-
   );
 }
 
