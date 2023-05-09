@@ -1,6 +1,7 @@
 import React from 'react';
 import Knight from './Knight';
 import BoardSquare from './BoardSquare'
+import { observe } from './Game';
 
 
 function renderSquare(i, knightPosition) {
@@ -22,7 +23,15 @@ function renderPiece(x, y, [knightX, knightY]) {
 }
 
 
-function ChessBoard({ knightPosition }) {
+function ChessBoard() {
+  const [knightPosition, setKnightPosition] = React.useState('');
+
+  React.useEffect(() => {
+    observe((newKnightPosition) => {
+      setKnightPosition(newKnightPosition);
+    });
+  }, []);
+
   const squares = []
   for (let i = 0; i < 64; i++) {
     squares.push(renderSquare(i, knightPosition))
