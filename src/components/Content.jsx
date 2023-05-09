@@ -6,6 +6,11 @@ import { observe } from './ChessBoard/Game';
 import SingleTarget from './SingleTarget';
 import MultipleTarget from './MultipleTarget';
 import DragnDrop from './DragnDrop.jsx';
+import DragAround from './DragAround.jsx';
+import NestedDraggable from './NestedDraggable.jsx';
+import NestedDroppable from './NestedDroppable.jsx';
+import Sortable from './Sortable.jsx';
+
 
 function Content() {
   const [knightPosition, setKnightPosition] = React.useState('');
@@ -31,7 +36,18 @@ function Content() {
       <Box title='Drag&Drop'>
         <DragnDrop />
       </Box>
-
+      <Box title='Drag Around'>
+        <DragAround />
+      </Box>
+      <Box title='Nested Draggable'>
+        <NestedDraggable />
+      </Box>
+      <Box title='Nested Droppable'>
+        <NestedDroppable />
+      </Box>
+      <Box title='Sortable'>
+        <Sortable />
+      </Box>
     </div>
   );
 }
